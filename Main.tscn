@@ -17,7 +17,7 @@ size = Vector2(96.5, 2490)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mxx12"]
 size = Vector2(114, 2491)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("_ball", "_paddleA", "_paddleB", "_labelScoreA", "_labelScoreB", "_menu", "_audioBall", "_audioConfirm", "_audioCancel", "_audioBeep")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("_ball", "_paddleA", "_paddleB", "_labelScoreA", "_labelScoreB", "_menu")]
 script = ExtResource("1_4q4kc")
 _ball = NodePath("Ball")
 _paddleA = NodePath("PaddleA")
@@ -25,10 +25,6 @@ _paddleB = NodePath("PaddleB")
 _labelScoreA = NodePath("UI/LabelPlayerA/LabelScoreA")
 _labelScoreB = NodePath("UI/LabelPlayerB/LabelScoreB")
 _menu = NodePath("Menu")
-_audioBall = NodePath("")
-_audioConfirm = NodePath("")
-_audioCancel = NodePath("")
-_audioBeep = NodePath("")
 
 [node name="Background" type="ColorRect" parent="."]
 offset_right = 1920.0

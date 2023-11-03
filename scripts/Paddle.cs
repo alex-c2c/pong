@@ -15,10 +15,22 @@ public partial class Paddle : Area2D
 	private string _upAction;
 	private string _downAction;
 	private float _halfHeight;
+	private double _width;
 	private Vector2 _initialPosition;
 
-	public bool AutoPlay { get; set; } = false;
+	public bool AutoPlay
+	{ 
+		get;
+		set;
+	} = false;
 
+	public double Width
+	{
+		get
+		{
+			return _width;
+		}
+	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -32,6 +44,7 @@ public partial class Paddle : Area2D
 
 		Control panel = GetNode("Panel") as Control;
 		_halfHeight = panel.Size.Y * 0.5f;
+		_width = panel.Size.X;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -46,7 +59,7 @@ public partial class Paddle : Area2D
 
 		if (AutoPlay)
 		{
-			if (new Random().Next(0,101) > 50)
+			if (new Random().Next(0,101) > 0)
 			{
 				input = CheckBallWithinPaddleRange();
 			}

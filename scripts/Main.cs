@@ -81,7 +81,7 @@ public partial class Main : Node2D
 		{
 			AudioManager.PlaySFX("select", this);
 
-			_ball?.ReverseDirectionX();
+			_ball?.HitPaddle(areaName == "paddlea" ? _paddleA : _paddleB);
 		}
 		else if (areaName.Contains("wall"))
 		{

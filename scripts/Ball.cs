@@ -58,22 +58,31 @@ public partial class Ball : Area2D
 		return _size;
 	}
 
-	public void ReverseDirectionX()
+	public void HitPaddle(Paddle paddle)
 	{
-		//Vector2 position = this.Position;
-		//_direction = new Vector2(position.X * -1.0f, position.Y);
+		// +ve value: bottom of paddle
+		// -ve value: top of paddle 
+		double diffY = this.Position.Y - paddle.Position.Y;
+		diffY *= 0.25f; // reduces the angle of reflection
 
-		int randomY = new Random().Next(-80, 81);
+		double factor = Math.Sqrt(Math.Pow(paddle.Width * 0.5f, 2f) + Math.Pow(diffY, 2f));
 
-		_direction = new Vector2(_direction.X > 0 ? -1 : 1, randomY / 100f);
+		float x = (float)(paddle.Width * 0.5f / factor);
+		float y = (float)(diffY / factor);
+
+		_direction = new Vector2(x * (paddle.GetPlayer() == GameManager.Player.A ? 1 : -1), y);
+
+		//_direction = new Vector2((float)(paddle.Width * 0.5f / factor) *, (float)(diffY / factor));
+
+		//int randomY = new Random().Next(-80, 81);
+
+		//_direction = new Vector2(_direction.X > 0 ? -1 : 1, randomY / 100f);
 
 		_speed = DEFAULT_SPEED;
 	}
 
 	public void ReverseDirectionY()
 	{
-		int randomX = new Random().Next(-80, 81);
-
 		_direction = new Vector2(_direction.X, _direction.Y > 0 ? -1 : 1);
 	}
 }
