@@ -7,13 +7,16 @@ using System.Diagnostics.Tracing;
 public partial class Ball : Area2D
 {
 	private const float DEFAULT_SPEED = 1000.0f;
+	private const float BOUNCE_FACTOR_Y = 0.25f;
+
 	private double _speed = DEFAULT_SPEED;
+	private Vector2 _size;
 
 	public Vector2 _direction = Vector2.Right;
 
 	public bool IsLaunched { get; set; } = false;
 
-	private Vector2 _size;
+	
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -63,22 +66,8 @@ public partial class Ball : Area2D
 		// +ve value: bottom of paddle
 		// -ve value: top of paddle 
 		double diffY = this.Position.Y - paddle.Position.Y;
-		diffY *= 0.25f; // reduces the angle of reflection
 
-		double factor = Math.Sqrt(Math.Pow(paddle.Width * 0.5f, 2f) + Math.Pow(diffY, 2f));
-
-		float x = (float)(paddle.Width * 0.5f / factor);
-		float y = (float)(diffY / factor);
-
-		_direction = new Vector2(x * (paddle.GetPlayer() == GameManager.Player.A ? 1 : -1), y);
-
-		//_direction = new Vector2((float)(paddle.Width * 0.5f / factor) *, (float)(diffY / factor));
-
-		//int randomY = new Random().Next(-80, 81);
-
-		//_direction = new Vector2(_direction.X > 0 ? -1 : 1, randomY / 100f);
-
-		_speed = DEFAULT_SPEED;
+		_direction = new Vector2((float)paddle.Width * 0.5f * (paddle.GetPlayer() == GameManager.Player.A ? 1 : -1), (float)diffY * BOUNCE_FACTOR_Y).Normalized();
 	}
 
 	public void ReverseDirectionY()
