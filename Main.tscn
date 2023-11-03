@@ -1,0 +1,197 @@
+[gd_scene load_steps=9 format=3 uid="uid://bixjl7ya5sb11"]
+
+[ext_resource type="Script" path="res://scripts/Main.cs" id="1_4q4kc"]
+[ext_resource type="Texture2D" uid="uid://b50y8c5rf38us" path="res://separator.png" id="1_xjqwg"]
+[ext_resource type="PackedScene" uid="uid://cnjfdqwssmo3v" path="res://Paddle.tscn" id="2_3nuq4"]
+[ext_resource type="PackedScene" uid="uid://hx261sucvd3g" path="res://Ball.tscn" id="4_01wxl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2lm6"]
+size = Vector2(1920, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_te03p"]
+size = Vector2(1920, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g35vj"]
+size = Vector2(96.5, 2490)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxx12"]
+size = Vector2(114, 2491)
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("_ball", "_paddleA", "_paddleB", "_labelScoreA", "_labelScoreB", "_menu", "_audioBall", "_audioConfirm", "_audioCancel", "_audioBeep")]
+script = ExtResource("1_4q4kc")
+_ball = NodePath("Ball")
+_paddleA = NodePath("PaddleA")
+_paddleB = NodePath("PaddleB")
+_labelScoreA = NodePath("UI/LabelPlayerA/LabelScoreA")
+_labelScoreB = NodePath("UI/LabelPlayerB/LabelScoreB")
+_menu = NodePath("Menu")
+_audioBall = NodePath("")
+_audioConfirm = NodePath("")
+_audioCancel = NodePath("")
+_audioBeep = NodePath("")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.239216, 0.239216, 0.239216, 1)
+
+[node name="Separator" type="Sprite2D" parent="."]
+position = Vector2(965, 537)
+scale = Vector2(2.4, 2.4)
+texture = ExtResource("1_xjqwg")
+
+[node name="PaddleA" parent="." node_paths=PackedStringArray("_ball") instance=ExtResource("2_3nuq4")]
+position = Vector2(100, 540)
+_ball = NodePath("../Ball")
+
+[node name="PaddleB" parent="." node_paths=PackedStringArray("_ball") instance=ExtResource("2_3nuq4")]
+position = Vector2(1820, 540)
+scale = Vector2(-1, 1)
+_ball = NodePath("../Ball")
+_player = 1
+
+[node name="Ball" parent="." instance=ExtResource("4_01wxl")]
+position = Vector2(130, 540)
+
+[node name="WallTop" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallTop"]
+position = Vector2(960, -40)
+shape = SubResource("RectangleShape2D_g2lm6")
+one_way_collision_margin = 5.0
+
+[node name="WallBottom" type="Area2D" parent="."]
+position = Vector2(0, 1080)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallBottom"]
+position = Vector2(960, 40)
+shape = SubResource("RectangleShape2D_te03p")
+one_way_collision_margin = 5.0
+
+[node name="GoalA" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalA"]
+position = Vector2(-240, 523)
+shape = SubResource("RectangleShape2D_g35vj")
+one_way_collision_margin = 5.0
+
+[node name="GoalB" type="Area2D" parent="."]
+position = Vector2(1920, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalB"]
+position = Vector2(255, 483.5)
+shape = SubResource("RectangleShape2D_mxx12")
+one_way_collision_margin = 5.0
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="LabelPlayerA" type="Label" parent="UI"]
+offset_left = 700.0
+offset_top = 65.0
+offset_right = 900.0
+offset_bottom = 125.0
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 40
+text = "A
+"
+horizontal_alignment = 2
+uppercase = true
+
+[node name="LabelScoreA" type="Label" parent="UI/LabelPlayerA"]
+layout_mode = 0
+offset_top = 51.0
+offset_right = 200.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 30
+text = "99
+"
+horizontal_alignment = 2
+uppercase = true
+
+[node name="LabelPlayerB" type="Label" parent="UI"]
+offset_left = 1020.0
+offset_top = 65.0
+offset_right = 1220.0
+offset_bottom = 125.0
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 40
+text = "B"
+uppercase = true
+
+[node name="LabelScoreB" type="Label" parent="UI/LabelPlayerB"]
+layout_mode = 0
+offset_top = 50.0
+offset_right = 200.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 30
+text = "99
+"
+uppercase = true
+
+[node name="Menu" type="Node2D" parent="."]
+visible = false
+
+[node name="Background" type="ColorRect" parent="Menu"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 0.784314)
+
+[node name="LabelPause" type="Label" parent="Menu"]
+offset_top = 207.0
+offset_right = 1922.0
+offset_bottom = 298.0
+theme_override_font_sizes/font_size = 60
+text = "PAUSED!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingBox" type="ColorRect" parent="Menu"]
+offset_left = 660.0
+offset_top = 330.0
+offset_right = 1260.0
+offset_bottom = 800.0
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="CheckboxAutoPlayerA" type="CheckButton" parent="Menu/SettingBox"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 60.0
+offset_right = 460.0
+offset_bottom = 120.0
+theme_override_font_sizes/font_size = 30
+text = "Player A Autoplay"
+expand_icon = true
+
+[node name="CheckboxAutoPlayerB" type="CheckButton" parent="Menu/SettingBox"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 130.0
+offset_right = 460.0
+offset_bottom = 190.0
+theme_override_font_sizes/font_size = 30
+text = "Player B Autoplay"
+expand_icon = true
+
+[node name="ButtonResetGame" type="Button" parent="Menu/SettingBox"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 250.0
+offset_right = 460.0
+offset_bottom = 310.0
+theme_override_font_sizes/font_size = 30
+text = "Reset Game"
+
+[node name="ButtonQuitGame" type="Button" parent="Menu/SettingBox"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 330.0
+offset_right = 460.0
+offset_bottom = 390.0
+theme_override_font_sizes/font_size = 30
+text = "Quit Game"
+
+[connection signal="area_entered" from="Ball" to="." method="_on_ball_area_entered"]
+[connection signal="toggled" from="Menu/SettingBox/CheckboxAutoPlayerA" to="." method="_on_checkbox_auto_player_a_toggled"]
+[connection signal="toggled" from="Menu/SettingBox/CheckboxAutoPlayerB" to="." method="_on_checkbox_auto_player_b_toggled"]
+[connection signal="pressed" from="Menu/SettingBox/ButtonResetGame" to="." method="_on_button_reset_game_pressed"]
+[connection signal="pressed" from="Menu/SettingBox/ButtonQuitGame" to="." method="_on_button_quit_game_pressed"]
