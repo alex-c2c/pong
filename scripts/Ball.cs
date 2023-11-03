@@ -70,9 +70,9 @@ public partial class Ball : Area2D
 		_direction = new Vector2((float)paddle.Width * 0.5f * (paddle.GetPlayer() == GameManager.Player.A ? 1 : -1), (float)diffY * BOUNCE_FACTOR_Y).Normalized();
 	}
 
-	public void ReverseDirectionY()
+	public void HitWall()
 	{
-		_direction = new Vector2(_direction.X, _direction.Y > 0 ? -1 : 1);
+		_direction = new Vector2(_direction.X, _direction.Y * -1f);
 	}
 }
 

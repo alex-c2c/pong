@@ -87,7 +87,7 @@ public partial class Main : Node2D
 		{
 			AudioManager.PlaySFX("select", this);
 
-			_ball?.ReverseDirectionY();
+			_ball?.HitWall();
 		}
 	}
 
